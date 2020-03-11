@@ -1,13 +1,4 @@
 import numpy as np
-from sklearn.datasets import load_iris
-from sklearn.svm import LinearSVC
-from sklearn.model_selection import cross_val_predict
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import f1_score
 
 class MySVM(object):
     def __init__(self, eta = 0.0001, epoch = 20, kernel = 'linear', C = 1.0):
@@ -83,31 +74,4 @@ class MySVM(object):
     def kernel(self, x):
         if self.kennel == 'linear':
             return np.dot(x, x.T)
-
-
-spambase = np.loadtxt('data/spambase/spambase.data', delimiter = ",")
-data_X = spambase[:, :57]
-data_y = spambase[:, 57]
-for i in range(0, len(data_y)):
-    if data_y[i] == 0:
-        data_y[i] = -1
-X_Standard = StandardScaler().fit_transform(data_X)
-trainX, testX, trainY, testY = train_test_split(X_Standard, data_y, test_size = 0.4, random_state = 32)
-
-
-
-model = MySVM(epoch = 1000, C = 0.01)
-model.fit(trainX, trainY)
-y_pred = model.predict(testX)
-print("*********************")
-print(y_pred)
-
-a_score = accuracy_score(testY, y_pred)
-p_score = precision_score(testY, y_pred)
-r_score = recall_score(testY, y_pred)
-f_score = f1_score(testY, y_pred)
-print("accuracy_score:" , a_score)
-print("precision_score:", p_score)
-print("recall_score:", r_score)
-print("f1_score:", f_score)
 
