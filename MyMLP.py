@@ -1,10 +1,4 @@
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import f1_score
 
 class MyMLP(object):
     def __init__(self, eta = 0.0001, epoch = 20):
@@ -38,27 +32,3 @@ class MyMLP(object):
                 else:
                     result[i][j] = 0
         return result
-
-
-data = np.loadtxt('data/kaggle_mnist/mnist_train.csv', delimiter = ",")
-data_X = data[:, :784]
-# data_X = data_X.reshape((28,28))
-data_y = data[:, 0]
-X_Standard = StandardScaler().fit_transform(data_X)
-trainX, testX, trainY, testY = train_test_split(X_Standard, data_y, test_size = 0.4, random_state = 32)
-y_MLP = np.zeros((trainY.shape[0], 10))
-for i in range(0,trainY.shape[0]):
-    y_MLP[i][int(trainY[i])] = 1
-
-model = MyMLP()
-model.fit(trainX, y_MLP)
-y_pred = model.predict(testX)
-
-a_score = accuracy_score(testY, y_pred)
-p_score = np.mean(precision_score(testY, y_pred, average= None))
-r_score = np.mean(recall_score(testY, y_pred, average=None))
-f_score = np.mean(f1_score(testY, y_pred, average=None))
-print("accuracy_score:" , a_score)
-print("precision_score:", p_score)
-print("recall_score:", r_score)
-print("f1_score:", f_score)
