@@ -1,11 +1,4 @@
 import numpy as np
-spambase = np.loadtxt('data/spambase/spambase.data', delimiter = ",")
-spamx = spambase[:, :57]
-spamy = spambase[:, 57]
-
-from sklearn.model_selection import train_test_split
-trainX, testX, trainY, testY = train_test_split(spamx, spamy, test_size = 0.4, random_state = 32)
-trainX.shape, trainY.shape, testX.shape, testY.shape
 
 # YOUR CODE HERE
 # class myGaussianNB():
@@ -102,26 +95,3 @@ class myGaussianNB:
         self.mu = np.asarray(self.mu)
         self.cov = np.asarray(self.cov)
 
-
-
-# test case
-from sklearn.metrics import accuracy_score
-model = myGaussianNB()
-model.fit(trainX, trainY)
-# accuracy_score(testY, model.predict(testX))
-
-# YOUR CODE HERE
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import f1_score
-y_pred = model.predict(testX)
-a_score = accuracy_score(testY, y_pred)
-p_score = precision_score(testY, y_pred)
-r_score = recall_score(testY, y_pred)
-f_score = f1_score(testY, y_pred)
-
-print("accuracy_score:" , a_score)
-print("precision_score:", p_score)
-print("recall_score:", r_score)
-print("f1_score:", f_score)
