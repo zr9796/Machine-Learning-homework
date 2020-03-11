@@ -1,12 +1,4 @@
 import numpy as np
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import cross_val_predict
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import f1_score
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 
 class MyLogisticRegression(object):
     def __init__(self, eta = 0.0001, epoch = 20, lambda_ = 0.001):
@@ -36,24 +28,3 @@ class MyLogisticRegression(object):
     def Logistic(self, x):
         return 1 / (1 + np.exp(-x))
 
-
-spambase = np.loadtxt('data/spambase/spambase.data', delimiter = ",")
-spamx = spambase[:, :57]
-spamy = spambase[:, 57]
-
-X_Standard = StandardScaler().fit_transform(spamx)
-trainX, testX, trainY, testY = train_test_split(X_Standard, spamy, test_size = 0.4, random_state = 32)
-
-model = MyLogisticRegression()
-model.fit(trainX,trainY)
-y_pred = model.predict(testX)
-# y_pred = cross_val_predict(model, X_Standard, spamy, cv=10)
-a_score = accuracy_score(testY, y_pred)
-p_score = precision_score(testY, y_pred)
-r_score = recall_score(testY, y_pred)
-f_score = f1_score(testY, y_pred)
-
-print("accuracy_score:" , a_score)
-print("precision_score:", p_score)
-print("recall_score:", r_score)
-print("f1_score:", f_score)
